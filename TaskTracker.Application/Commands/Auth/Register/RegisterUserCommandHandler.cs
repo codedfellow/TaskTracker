@@ -9,7 +9,7 @@ using TaskTracker.Application.Contracts.Data;
 using TaskTracker.Domain.Entities;
 using static BCrypt.Net.BCrypt;
 
-namespace TaskTracker.Application.Commands.Auth
+namespace TaskTracker.Application.Commands.Auth.Register
 {
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, bool>
     {
@@ -26,6 +26,13 @@ namespace TaskTracker.Application.Commands.Auth
             if (role == null)
             {
                 throw new Exception("Invalid role specified.");
+            }
+
+            bool userExists = await _context.Users.AnyAsync(u => u.Email.Trim() == request.Email.Trim(), cancellationToken);
+
+            if (userExists)
+            {
+                throw new Exception("User with this email already exists.");
             }
 
             var user = new User

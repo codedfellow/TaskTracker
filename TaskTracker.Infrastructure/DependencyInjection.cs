@@ -7,8 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskTracker.Application.Contracts.Data;
+using TaskTracker.Application.Contracts.Providers;
 using TaskTracker.Domain.Entities;
 using TaskTracker.Infrastructure.Data;
+using TaskTracker.Infrastructure.Providers;
 
 namespace TaskTracker.Infrastructure
 {
@@ -35,7 +37,7 @@ namespace TaskTracker.Infrastructure
 
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
-            //services.AddScoped<IJwtTokenProvider, JwtTokenProvider>();
+            services.AddScoped<IJwtTokenProvider, JwtTokenProvider>();
             return services;
         }
     }

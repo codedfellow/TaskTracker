@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TaskTracker.Application.Commands.Auth;
+using TaskTracker.Application.Commands.Auth.Login;
+using TaskTracker.Application.Commands.Auth.Register;
 
 namespace TaskTracker.Api.Controllers
 {
@@ -31,6 +32,18 @@ namespace TaskTracker.Api.Controllers
             }
 
             return BadRequest("User registration failed.");
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
+        {
+            if (command == null)
+            {
+                return BadRequest("Invalid login data.");
+            }
+
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
     }
 }
