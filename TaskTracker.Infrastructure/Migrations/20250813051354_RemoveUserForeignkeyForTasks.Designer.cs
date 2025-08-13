@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskTracker.Infrastructure.Data;
 
@@ -10,9 +11,11 @@ using TaskTracker.Infrastructure.Data;
 namespace TaskTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250813051354_RemoveUserForeignkeyForTasks")]
+    partial class RemoveUserForeignkeyForTasks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.8");
@@ -99,8 +102,6 @@ namespace TaskTracker.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssignedToUserId");
-
                     b.ToTable("UserTasks");
                 });
 
@@ -113,17 +114,6 @@ namespace TaskTracker.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("TaskTracker.Domain.Entities.UserTask", b =>
-                {
-                    b.HasOne("TaskTracker.Domain.Entities.User", "AssignedTo")
-                        .WithMany()
-                        .HasForeignKey("AssignedToUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AssignedTo");
                 });
 #pragma warning restore 612, 618
         }

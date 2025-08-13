@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using TaskTracker.Domain.Enums;
 
-namespace TaskTracker.Domain.Entities
+namespace TaskTracker.Application.DTOs
 {
-    public class UserTask
+    public record TaskDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -16,8 +16,8 @@ namespace TaskTracker.Domain.Entities
         public DateTime CreatedAt { get; set; }
         public DateTime? CompletedAt { get; set; }
         public TaskStatusEnum Status { get; set; }
-        [ForeignKey(nameof(AssignedTo))]
         public Guid AssignedToUserId { get; set; }
-        public User AssignedTo { get; set; }
+        public string? AssignedToUserEmail { get; set; }
+        public string? StatusText { get; set; }
     }
 }
